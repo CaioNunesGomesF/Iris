@@ -40,7 +40,7 @@ export async function authenticateUser(email, password) {
   // Gera o token JWT com payload contendo id do usuário
   const token = jwt.sign(
 
-    { id: user.id },
+    { id: user.id, name: user.name },
     JWT_SECRET,
     { expiresIn: '1h' }
   );
