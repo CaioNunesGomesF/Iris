@@ -1,4 +1,3 @@
-# Usa Node.js como base
 FROM node:18
 
 # Define diretório de trabalho
