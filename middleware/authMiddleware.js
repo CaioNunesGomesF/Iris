@@ -6,9 +6,7 @@ export function authenticateToken(req, res, next) {
 
     const authHeader = req.headers['authorization'];
 
-    const token = authHeader && authHeader.split(' ')[1]; // Bearer token
-
-    // Se o token não estiver presente, retorna erro 401
+    const token = authHeader && authHeader.split(' ')[1]; 
 
     if (!token) {
 

@@ -18,7 +18,8 @@ export async function getUserByEmail(email) {
     'SELECT * FROM User WHERE email = ?',
     [email]
   );
-  return rows[0]; 
+    if (rows.length === 0) return null; 
+  return rows[0];
 }
 
 export default { createUser, getUserByEmail };

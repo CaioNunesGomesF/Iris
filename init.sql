@@ -1,0 +1,12 @@
+CREATE DATABASE IF NOT EXISTS IrisDatabase;
+USE IrisDatabase;
+
+CREATE TABLE IF NOT EXISTS User (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30),
+    email VARCHAR(60) UNIQUE,
+    password VARCHAR(255),
+    pontosAtuais DECIMAL(10,2) DEFAULT 0,
+    pontosTotais DECIMAL(10,2) DEFAULT 0,
+    pontosDiario DECIMAL(10,2) DEFAULT 0
+);
