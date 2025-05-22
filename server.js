@@ -1,7 +1,10 @@
 import express from 'express';
-import router from './routes/authRoutes.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
+
+import authRouter from './routes/authRoutes.js';
+import userRouter from './routes/userRoutes.js';
+import pontosRouter from './routes/pontosRoutes.js';
 
 dotenv.config();
 
@@ -17,7 +20,9 @@ app.get('/', (req, res) => {
     res.send('Application is running!');
 });
 
-app.use('/usuario', router)
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
+app.use('/user', pontosRouter);
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor rodando na porta ${PORT}`);
