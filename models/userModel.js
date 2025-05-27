@@ -1,6 +1,6 @@
 import pool from '../database/db.js';
 
-// Cria novo usuário no banco
+//Cria novo usuário no banco
 export async function createUser(name, email, hashedPassword) {
   const [result] = await pool.execute(
 
@@ -11,7 +11,7 @@ export async function createUser(name, email, hashedPassword) {
   return result.insertId;
 }
 
-// Busca usuário pelo email
+//Busca usuário pelo email
 export async function getUserByEmail(email) {
 
   const [rows] = await pool.execute(
@@ -22,4 +22,12 @@ export async function getUserByEmail(email) {
   return rows[0];
 }
 
-export default { createUser, getUserByEmail };
+export async function deleteUser(userId) {
+  const [result] = await pool.execute(
+    'DELETE FROM User WHERE id = ?',
+    [userId]
+  );
+  return result;
+}
+
+export default { createUser, getUserByEmail, deleteUser };

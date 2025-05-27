@@ -57,3 +57,26 @@ export const getPontosByTipo = async (req, res) => {
     res.status(500).json({ error: 'Erro ao buscar pontos' });
   }
 };
+
+export const getPlano = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [rows] = await pool.query(
+      `SELECT P.nome, P.preco, P.duracao_em_dias
+       FROM Users U
+       JOIN Planos P ON U.plano_id = P.id
+       WHERE U.id = ?`,
+      [id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+
+    res.status(200).json({ plano: rows[0] });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar plano do usuário' });
+  }
+};

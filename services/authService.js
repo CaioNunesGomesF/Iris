@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import { createUser, getUserByEmail } from '../models/userModel.js';
+import { createUser, getUserByEmail, deleteUser } from '../models/userModel.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'segredo_supersecreto';
 
@@ -47,4 +47,15 @@ export async function authenticateUser(email, password) {
   );
 
   return { user, token };
+}
+
+export async function deleteUserService(userId) {
+  
+  const result = await deleteUser(userId);
+
+  if (result.affectedRows === 0) {
+    return { success: false, message: 'Usuário não encontrado' };
+  }
+
+  return { success: true, message: 'Usuário deletado com sucesso' };
 }
