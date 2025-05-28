@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import authRouter from './routes/authRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import pontosRouter from './routes/pontosRoutes.js';
+import rankingRouter from './routes/rankingRoutes.js';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/user', pontosRouter);
+app.use('/ranking', rankingRouter);
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor rodando na porta ${PORT}`);

@@ -6,4 +6,4 @@ const router = express.Router();
 router.put('/:id/adicionar', adicionarPontosController);
 router.put('/:id/remover', removerPontosController); 
 
-export default router;
+export default router;

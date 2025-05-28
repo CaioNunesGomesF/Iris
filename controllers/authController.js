@@ -1,8 +1,4 @@
-import { registerUser, authenticateUser, deleteUserService } from '../services/authService.js';
-import jwt from 'jsonwebtoken';
-import pool from '../database/db.js';
-
-
+import { registerUser, authenticateUser, deleteUserService, getPerfilService } from '../services/authService.js';
 
 export const cadastro = async (req, res) => {
 
@@ -76,27 +72,18 @@ export const getPerfil = async (req, res) => {
     const userId = req.user.id;
     console.log("ID recebido no token JWT:", userId);
 
-    const [rows] = await pool.query(
-      `SELECT U.name, U.email, P.nome AS plano
-       FROM User U
-       LEFT JOIN Planos P ON U.plano_id = P.id
-       WHERE U.id = ?`,
-      [userId]
-    );
+    const perfil = await getPerfilService(userId);
 
-    if (rows.length === 0) {
+    if (!perfil) {
       console.log("Nenhum usuário encontrado com esse ID.");
       return res.status(404).json({ error: 'Usuário não encontrado' });
     }
 
-    const { name, email, plano } = rows[0];
-
-    res.status(200).json({ name, email, plano: plano || 'Sem plano' });
+    res.status(200).json(perfil);
   } catch (error) {
     console.error('Erro ao buscar perfil:', error);
     res.status(500).json({ error: 'Erro interno ao buscar perfil' });
   }
 };
-
 
 export default { cadastro, login, deleteUser, getPerfil };

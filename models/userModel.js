@@ -30,4 +30,15 @@ export async function deleteUser(userId) {
   return result;
 }
 
-export default { createUser, getUserByEmail, deleteUser };
+export const getUserProfile = async (userId) => {
+  const [rows] = await pool.query(
+    `SELECT U.name, U.email, P.nome AS plano
+     FROM User U
+     LEFT JOIN Planos P ON U.plano_id = P.id
+     WHERE U.id = ?`,
+    [userId]
+  );
+  return rows;
+};
+
+export default { createUser, getUserByEmail, deleteUser, getUserProfile };
