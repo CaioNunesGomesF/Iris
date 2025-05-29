@@ -1,5 +1,7 @@
 import pool from '../database/db.js';
 
+import { buscarPontosPorEmailDB } from '../models/userModel.js';
+
 export const adicionarPontos = async (id, pontos) => {
   try {
     // Buscar o plano do usuário (ajuste nomes das tabelas/campos conforme seu banco)
@@ -51,4 +53,12 @@ export const removerPontos = async (id, pontos) => {
     console.error('Erro no serviço ao remover pontos:', error);
     throw error;
   }
+};
+
+export const buscarPontosPorEmailService = async (email) => {
+  const rows = await buscarPontosPorEmailDB(email);
+  if (rows.length === 0) {
+    throw new Error('Usuário não encontrado');
+  }
+  return rows[0];
 };

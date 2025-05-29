@@ -41,4 +41,12 @@ export const getUserProfile = async (userId) => {
   return rows;
 };
 
-export default { createUser, getUserByEmail, deleteUser, getUserProfile };
+export const buscarPontosPorEmailDB = async (email) => {
+  const [rows] = await pool.query(
+    `SELECT pontosAtuais, pontosDiario FROM User WHERE email = ?`,
+    [email]
+  );
+  return rows;
+};
+
+export default { createUser, getUserByEmail, deleteUser, getUserProfile, buscarPontosPorEmailDB };

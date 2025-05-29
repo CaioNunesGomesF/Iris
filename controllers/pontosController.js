@@ -1,4 +1,4 @@
-import { adicionarPontos, removerPontos } from '../services/pontosService.js';
+import { adicionarPontos, removerPontos, buscarPontosPorEmailService } from '../services/pontosService.js';
 import pool from '../database/db.js';
 
 export const adicionarPontosController = async (req, res) => {
@@ -39,18 +39,13 @@ export const buscarPontosPorEmail = async (req, res) => {
   const { email } = req.params;
 
   try {
-    const [rows] = await pool.query(
-      `SELECT pontosAtuais, pontosDiario FROM User WHERE email = ?`,
-      [email]
-    );
-
-    if (rows.length === 0) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-
-    res.status(200).json(rows[0]);
+    const pontos = await buscarPontosPorEmailService(email);
+    res.status(200).json(pontos);
   } catch (error) {
-    console.error('Erro ao buscar pontos do usuário:', error);
+    console.error('Erro ao buscar pontos do usuário:', error.message);
+    if (error.message === 'Usuário não encontrado') {
+      return res.status(404).json({ error: error.message });
+    }
     res.status(500).json({ error: 'Erro ao buscar pontos do usuário' });
   }
 };
